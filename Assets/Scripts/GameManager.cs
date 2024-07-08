@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = postGameTimeScale;
         gameOverScreen.SetActive(true);
+
+        Yeti.angularVelocityDegreesPerSecond = Yeti.startingAngularVelocityDegreesPerSecond;
+
+        SpawnRocks.rockSpeedPerSecond = SpawnRocks.startingRockSpeedPerSecond;
+        SpawnRocks.rockIntervalSeconds = SpawnRocks.startingRockIntervalSeconds;
         
         UpdateHighscore();
 

@@ -5,11 +5,13 @@ using Random = System.Random;
 
 public class SpawnRocks : MonoBehaviour
 {
-    public static float rockSpeedPerSecond = 1.25f;
+    public static readonly float startingRockSpeedPerSecond = 1.25f;
+    public static float rockSpeedPerSecond = startingRockSpeedPerSecond;
     public static readonly float rockAccelerationPerSecond = 0.0125f;
     public static readonly float maximumRockSpeedPerSecond = 3.25f;
 
-    public static float rockIntervalSeconds = 3.1f;
+    public static readonly float startingRockIntervalSeconds = 3.1f;
+    public static float rockIntervalSeconds = startingRockIntervalSeconds;
     public static readonly float rockIntervalDecreasePerSecond = 0.0015f;
     public static readonly float minimumRockIntervalSeconds = 0.45f;
 

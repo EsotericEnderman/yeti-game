@@ -16,7 +16,8 @@ public class Yeti : MonoBehaviour
 
     public static readonly KeyCode launchKey = KeyCode.Space;
 
-    public static float angularVelocityDegreesPerSecond = 120f;
+    public static readonly float startingAngularVelocityDegreesPerSecond = 120f;
+    public static float angularVelocityDegreesPerSecond = startingAngularVelocityDegreesPerSecond;
     public static readonly float angularVelocityDegreesIncreasePerSecond = 2.5f;
 
     public static readonly float pivotRadius = 1.5f;
