@@ -16,9 +16,11 @@ public class Yeti : MonoBehaviour
 
     public static readonly KeyCode launchKey = KeyCode.Space;
 
-    public static float angularVelocityDegrees = 120;
-    public static readonly float pivotRadius = 1.5F;
-    public static readonly float launchStrength = 15;
+    public static float angularVelocityDegreesPerSecond = 120f;
+    public static readonly float angularVelocityDegreesIncreasePerSecond = 2.5f;
+
+    public static readonly float pivotRadius = 1.5f;
+    public static readonly float launchStrength = 15f;
 
     public static float? pivotAngleDegrees = null;
 
@@ -74,7 +76,7 @@ public class Yeti : MonoBehaviour
                 pivotAngleDegrees = angleDegrees;
             }
 
-            pivotAngleDegrees += angularVelocityDegrees * Time.deltaTime;
+            pivotAngleDegrees += angularVelocityDegreesPerSecond * Time.deltaTime;
 
             transform.rotation = Quaternion.Euler(0, 0, -270 + (float) pivotAngleDegrees);
 
@@ -88,7 +90,7 @@ public class Yeti : MonoBehaviour
 
         if (GameManager.Score > 0)
         {
-            angularVelocityDegrees += 2.5F * Time.deltaTime;
+            angularVelocityDegreesPerSecond += angularVelocityDegreesIncreasePerSecond * Time.deltaTime;
         }
     }
 }

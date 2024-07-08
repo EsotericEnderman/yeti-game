@@ -10,18 +10,17 @@ public class Rock : MonoBehaviour
         rockTransform = GetComponent<Transform>();
     }
 
-    // Update is called once per frame.
     public void Update()
     {
         if (GameManager.Score > 0)
         {
             #nullable disable
-            rockTransform.position -= new Vector3(0, SpawnRocks.rockSpeed) * Time.deltaTime;
+            rockTransform.position -= new Vector3(0, SpawnRocks.rockSpeedPerSecond) * Time.deltaTime;
             #nullable enable
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D()
     {
         #nullable disable
         if (Yeti.Instance.pivotLocation == null && Yeti.Instance.previousPivotLocation != rockTransform)

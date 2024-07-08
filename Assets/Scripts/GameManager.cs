@@ -7,8 +7,10 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager? instance;
+    private static readonly float defaultTimeScale = 1f;
+    private static readonly float postGameTimeScale = 0.25f;
 
+    private static GameManager? instance;
     public static GameManager Instance
     {
         #nullable disable
@@ -19,7 +21,6 @@ public class GameManager : MonoBehaviour
     private static int highscore = 0;
 
     private static int score = 0;
-
     public static int Score
     {
         get { return score; }
@@ -39,39 +40,18 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text highscoreText;
 
-    private static bool gameEnded;
-
-    public static bool GameEnded
-    {
-        get { return gameEnded; }
-    }
-
     public GameObject gameOverScreen;
 
     public void Awake()
     {
-        Time.timeScale = 1;
+        Time.timeScale = defaultTimeScale;
         instance = this;
-        UpdateHighscore();
-    }
-
-    // Start is called before the first frame update.
-    public void Start()
-    {
-        gameEnded = false;
-
-        score = 0;
-
-        UpdateScoreText();
-
         UpdateHighscore();
     }
 
     public void EndGame()
     {
-        gameEnded = true;
-
-        Time.timeScale = 0.25f;
+        Time.timeScale = postGameTimeScale;
         gameOverScreen.SetActive(true);
         
         UpdateHighscore();

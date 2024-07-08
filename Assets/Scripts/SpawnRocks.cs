@@ -5,6 +5,19 @@ using Random = System.Random;
 
 public class SpawnRocks : MonoBehaviour
 {
+    public static float rockSpeedPerSecond = 1.25f;
+    public static readonly float rockAccelerationPerSecond = 0.0125f;
+    public static readonly float maximumRockSpeedPerSecond = 3.25f;
+
+    public static float rockIntervalSeconds = 3.1f;
+    public static readonly float rockIntervalDecreasePerSecond = 0.0015f;
+    public static readonly float minimumRockIntervalSeconds = 0.45f;
+
+    public static readonly float rockXPositionRange = 1.4f;
+
+    public static readonly float rockChance = 0.1f;
+    public static readonly float breakingRockChance = 0.1f;
+
     private static SpawnRocks? instance;
 
     public static SpawnRocks? Instance
@@ -12,10 +25,6 @@ public class SpawnRocks : MonoBehaviour
         get { return instance; }
     }
 
-    public static float rockSpeed = 1.25F;
-    public static float rockInterval = 3.1F;
-    public static readonly float rockXPositionRange = 1.4F;
-    
     public GameObject? breakingRockPrefab;
     public GameObject? rockPrefab;
     public GameObject? unbreakableRockPrefab;
@@ -29,14 +38,13 @@ public class SpawnRocks : MonoBehaviour
         instance = this;
     }
 
-    // Update is called once per frame.
     public void Update()
     {
         if (GameManager.Score >= 1)
         {
             currentTime += Time.deltaTime;
 
-            if (currentTime >= rockInterval)
+            if (currentTime >= rockIntervalSeconds)
             {
                 Random random = new();
 
@@ -44,12 +52,12 @@ public class SpawnRocks : MonoBehaviour
 
                 GameObject rock;
 
-                if (randomNumber <= 0.1F)
+                if (randomNumber <= rockChance)
                 {
                 #nullable disable
                     rock = instance.rockPrefab;
                 }
-                else if (randomNumber <= 0.2F)
+                else if (randomNumber <= rockChance + breakingRockChance)
                 {
                     rock = instance.breakingRockPrefab;
                 }
@@ -59,7 +67,7 @@ public class SpawnRocks : MonoBehaviour
                 }
 
                 GameObject rockCopy = Instantiate(rock);
-                rockCopy.transform.position = new Vector2(RockXPosition(rockNumber), 5);
+                rockCopy.transform.position = new Vector2(GetRockXPosition(rockNumber), 5);
                 #nullable enable
 
                 Destroy(rockCopy, 15);
@@ -68,15 +76,15 @@ public class SpawnRocks : MonoBehaviour
                 currentTime = 0;
             }
 
-            rockSpeed += 0.0125F * Time.deltaTime;
-            rockInterval -= 0.0015F * Time.deltaTime;
+            rockSpeedPerSecond += rockAccelerationPerSecond * Time.deltaTime;
+            rockIntervalSeconds -= rockIntervalDecreasePerSecond * Time.deltaTime;
 
-            rockSpeed = Mathf.Clamp(rockSpeed, 1.25F, 3.25F);
-            rockInterval = Mathf.Clamp(rockInterval, 0.45F, 3.1F);
+            rockSpeedPerSecond = Mathf.Min(rockSpeedPerSecond, maximumRockSpeedPerSecond);
+            rockIntervalSeconds = Mathf.Max(rockIntervalSeconds, minimumRockIntervalSeconds);
         }
     }
 
-    private static float RockXPosition(int rockNumber)
+    private static float GetRockXPosition(int rockNumber)
     {
         return rockXPositionRange * Mathf.Sin(rockNumber * rockNumber);
     }
