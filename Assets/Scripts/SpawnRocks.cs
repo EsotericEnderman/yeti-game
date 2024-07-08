@@ -20,22 +20,13 @@ public class SpawnRocks : MonoBehaviour
     public GameObject? rockPrefab;
     public GameObject? unbreakableRockPrefab;
 
-    private static int rockNumber;
+    private static int rockNumber = 0;
 
     private static float currentTime;
 
     public void Awake()
     {
         instance = this;
-    }
-
-    // Start is called before the first frame update.
-    public void Start()
-    {
-        rockSpeed = 1.25F;
-        rockInterval = 3.1F;
-
-        rockNumber = 0;
     }
 
     // Update is called once per frame.

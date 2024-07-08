@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
         #nullable enable
     }
 
-    private static int score;
+    private static int highscore = 0;
+
+    private static int score = 0;
 
     public static int Score
     {
@@ -57,8 +59,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update.
     public void Start()
     {
-        LoadData();
-
         gameEnded = false;
 
         score = 0;
@@ -76,36 +76,8 @@ public class GameManager : MonoBehaviour
         gameOverScreen.SetActive(true);
         
         UpdateHighscore();
-        SaveData();
 
         score = 0;
-    }
-
-    private void SaveData()
-    {
-        string jsonData = JsonUtility.ToJson(DataClass.Instance);
-
-        if (jsonData != null)
-        {
-            jsonData = JsonUtility.ToJson(new DataStructure());
-        }
-
-        PlayerPrefs.SetString("data", jsonData);
-    }
-
-    private void LoadData()
-    {
-        string jsonData = PlayerPrefs.GetString("data");
-
-        if (jsonData != "")
-        {
-            DataStructure data = JsonUtility.FromJson<DataStructure>(jsonData);
-
-            DataStaticClass.highscore = data.highscore;
-            DataClass.Instance.Highscore = data.highscore;
-
-            UpdateHighscore();
-        }
     }
 
     public void LoadScene(string sceneName)
@@ -126,16 +98,11 @@ public class GameManager : MonoBehaviour
 
     public void UpdateHighscore()
     {
-        if (score >= DataStaticClass.highscore)
+        if (score > highscore)
         {
-            if (DataClass.Instance != null)
-            {
-                DataClass.Instance.Highscore = score;
-            }
-
-            DataStaticClass.highscore = score;
+            highscore = score;
         }
 
-        highscoreText.text = DataStaticClass.highscore.ToString();
+        highscoreText.text = highscore.ToString();
     }
 }

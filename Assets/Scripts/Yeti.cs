@@ -29,13 +29,6 @@ public class Yeti : MonoBehaviour
         pivotAngleDegrees = null;
     }
 
-    // Start is called before the first frame update.
-    public void Start()
-    {
-        angularVelocityDegrees = 120;
-    }
-
-    // Update is called once per frame.
     public void Update()
     {
         if ((Input.GetKey(launchKey) || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && pivotLocation != null)
@@ -46,9 +39,6 @@ public class Yeti : MonoBehaviour
 
             float x = Mathf.Cos(pivotAngleRadians) * pivotRadius;
             float y = Mathf.Sin(pivotAngleRadians) * pivotRadius;
-
-            // float radiusSlope = y / x;
-            // float perpendicularRadius = -x / y;
 
             #nullable disable
             yetiRigidbody.velocity = new Vector2(-y, x).normalized * launchStrength;
