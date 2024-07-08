@@ -101,13 +101,6 @@ public class GameManager : MonoBehaviour
         {
             DataStructure data = JsonUtility.FromJson<DataStructure>(jsonData);
 
-            Debug.Log(data);
-            Debug.Log(data.highscore);
-
-            Debug.Log(DataStaticClass.highscore);
-            Debug.Log(DataClass.Instance);
-            Debug.Log(DataClass.Instance.Highscore);
-
             DataStaticClass.highscore = data.highscore;
             DataClass.Instance.Highscore = data.highscore;
 
