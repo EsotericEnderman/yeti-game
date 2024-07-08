@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #nullable enable
     public TMP_Text? scoreText;
     #nullable disable
 
