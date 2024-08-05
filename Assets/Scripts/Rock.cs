@@ -3,37 +3,27 @@ using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
-    private Transform? rockTransform;
 
-    public void Awake()
-    {
-        rockTransform = GetComponent<Transform>();
-    }
+#nullable disable
+    public Transform rockTransform;
+#nullable enable
 
     public void Update()
     {
-        if (GameManager.Score > 0)
+        if (GameManager.Instance.Score > 0)
         {
-            #nullable disable
-            rockTransform.position -= new Vector3(0, SpawnRocks.rockSpeedPerSecond) * Time.deltaTime;
-            #nullable enable
+            rockTransform.position -= new Vector3(0, SpawnRocks.Instance.RockSpeedPerSecond) * Time.deltaTime;
         }
     }
 
     public void OnTriggerEnter2D()
     {
-        #nullable disable
         if (Yeti.Instance.pivotLocation == null && Yeti.Instance.previousPivotLocation != rockTransform)
-        #nullable enable
         {
             Yeti.Instance.pivotLocation = rockTransform;
-
-            if (Yeti.pivotAngleDegrees != null)
-            {
-                GameManager.Score++;
-
-                GameManager.Instance.UpdateScoreText();
-            }
+            GameManager gameManager = GameManager.Instance;
+            gameManager.IncrementScore();
+            gameManager.UpdateScoreText();
         }
     }
 }

@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
@@ -7,46 +6,39 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    private static readonly float defaultTimeScale = 1f;
-    private static readonly float postGameTimeScale = 0.25f;
 
-    private static GameManager? instance;
-    public static GameManager Instance
-    {
-        #nullable disable
-        get { return instance; }
-        #nullable enable
-    }
+#nullable disable
+    private static GameManager instance;
+    public static GameManager Instance { get => instance; }
 
-    private static int highscore = 0;
-
-    private static int score = 0;
-    public static int Score
-    {
-        get { return score; }
-        set
-        {
-            if (value != score + 1)
-            {
-                throw new ArgumentOutOfRangeException("Can only increment score by 1!");
-            } else {
-                score = value;
-            }
-        }
-    }
-
-    public TMP_Text? scoreText;
-    #nullable disable
-
+    public TMP_Text scoreText;
     public TMP_Text highscoreText;
-
     public GameObject gameOverScreen;
+#nullable enable
+
+    private static readonly float defaultTimeScale = 1F;
+    private static readonly float postGameTimeScale = 0.25F;
+
+    private int highscore = 0;
+
+    private int score = 0;
+    public int Score { get => score; }
+    public void IncrementScore()
+    {
+        score++;
+    }
+
+    public bool HasGameStarted() {
+        return score >= 1;
+    }
 
     public void Awake()
     {
-        Time.timeScale = defaultTimeScale;
         instance = this;
+
         UpdateHighscore();
+
+        Time.timeScale = defaultTimeScale;
     }
 
     public void EndGame()
@@ -54,20 +46,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = postGameTimeScale;
         gameOverScreen.SetActive(true);
 
-        Yeti.angularVelocityDegreesPerSecond = Yeti.startingAngularVelocityDegreesPerSecond;
-
-        SpawnRocks.rockSpeedPerSecond = SpawnRocks.startingRockSpeedPerSecond;
-        SpawnRocks.rockIntervalSeconds = SpawnRocks.startingRockIntervalSeconds;
-        
         UpdateHighscore();
-
         score = 0;
     }
 
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-
         UpdateHighscore();
     }
 

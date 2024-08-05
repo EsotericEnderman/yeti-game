@@ -5,88 +5,87 @@ using Random = System.Random;
 
 public class SpawnRocks : MonoBehaviour
 {
-    public static readonly float startingRockSpeedPerSecond = 1.25f;
-    public static float rockSpeedPerSecond = startingRockSpeedPerSecond;
-    public static readonly float rockAccelerationPerSecond = 0.0125f;
-    public static readonly float maximumRockSpeedPerSecond = 3.25f;
 
-    public static readonly float startingRockIntervalSeconds = 3.1f;
-    public static float rockIntervalSeconds = startingRockIntervalSeconds;
-    public static readonly float rockIntervalDecreasePerSecond = 0.0015f;
-    public static readonly float minimumRockIntervalSeconds = 0.45f;
+#nullable disable
+    private static SpawnRocks instance;
 
-    public static readonly float rockXPositionRange = 1.4f;
+    public static SpawnRocks Instance { get => instance; }
 
-    public static readonly float rockChance = 0.1f;
-    public static readonly float breakingRockChance = 0.1f;
+    public GameObject breakingRockPrefab;
+    public GameObject rockPrefab;
+    public GameObject unbreakableRockPrefab;
+#nullable enable
 
-    private static SpawnRocks? instance;
+    private readonly float startingRockSpeedPerSecond = 1.25F;
+    private readonly float rockAccelerationPerSecond = 0.0125F;
+    private readonly float maximumRockSpeedPerSecond = 3.25F;
 
-    public static SpawnRocks? Instance
-    {
-        get { return instance; }
-    }
+    private readonly float startingRockIntervalSeconds = 3.1F;
+    private readonly float rockIntervalDecreasePerSecond = 0.0015F;
+    private readonly float minimumRockIntervalSeconds = 0.45F;
 
-    public GameObject? breakingRockPrefab;
-    public GameObject? rockPrefab;
-    public GameObject? unbreakableRockPrefab;
+    private readonly float rockXPositionRange = 1.4F;
 
-    private static int rockNumber = 0;
+    private readonly float rockChance = 0.1F;
+    private readonly float breakingRockChance = 0.1F;
 
-    private static float currentTime;
+    private float timeWithoutRockSpawnSeconds = 0F;
+    private float rockSpeedPerSecond;
+    public float RockSpeedPerSecond { get => rockSpeedPerSecond; }
+    private float rockSpawnIntervalSeconds;
+    private int rockNumber = 0;
 
     public void Awake()
     {
         instance = this;
+
+        rockSpeedPerSecond = startingRockSpeedPerSecond;
+        rockSpawnIntervalSeconds = startingRockIntervalSeconds;
     }
 
     public void Update()
     {
-        if (GameManager.Score >= 1)
+        if (GameManager.Instance.HasGameStarted())
         {
-            currentTime += Time.deltaTime;
+            timeWithoutRockSpawnSeconds += Time.deltaTime;
 
-            if (currentTime >= rockIntervalSeconds)
+            if (timeWithoutRockSpawnSeconds >= rockSpawnIntervalSeconds)
             {
                 Random random = new();
-
                 double randomNumber = random.NextDouble();
-
                 GameObject rock;
 
                 if (randomNumber <= rockChance)
                 {
-                #nullable disable
-                    rock = instance.rockPrefab;
+                    rock = rockPrefab;
                 }
                 else if (randomNumber <= rockChance + breakingRockChance)
                 {
-                    rock = instance.breakingRockPrefab;
+                    rock = breakingRockPrefab;
                 }
                 else
                 {
-                    rock = instance.unbreakableRockPrefab;
+                    rock = unbreakableRockPrefab;
                 }
 
                 GameObject rockCopy = Instantiate(rock);
                 rockCopy.transform.position = new Vector2(GetRockXPosition(rockNumber), 5);
-                #nullable enable
 
                 Destroy(rockCopy, 15);
 
                 rockNumber++;
-                currentTime = 0;
+                timeWithoutRockSpawnSeconds = 0;
             }
 
             rockSpeedPerSecond += rockAccelerationPerSecond * Time.deltaTime;
-            rockIntervalSeconds -= rockIntervalDecreasePerSecond * Time.deltaTime;
+            rockSpawnIntervalSeconds -= rockIntervalDecreasePerSecond * Time.deltaTime;
 
             rockSpeedPerSecond = Mathf.Min(rockSpeedPerSecond, maximumRockSpeedPerSecond);
-            rockIntervalSeconds = Mathf.Max(rockIntervalSeconds, minimumRockIntervalSeconds);
+            rockSpawnIntervalSeconds = Mathf.Max(rockSpawnIntervalSeconds, minimumRockIntervalSeconds);
         }
     }
 
-    private static float GetRockXPosition(int rockNumber)
+    private float GetRockXPosition(int rockNumber)
     {
         return rockXPositionRange * Mathf.Sin(rockNumber * rockNumber);
     }

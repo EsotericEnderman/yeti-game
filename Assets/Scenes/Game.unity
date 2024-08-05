@@ -1861,7 +1861,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivotLocation: {fileID: 2102316553}
-  previousPivotLocation: {fileID: 0}
+  previousPivotLocation: {fileID: 1757521534}
+  yetiRigidbody: {fileID: 1757521535}
+  angularVelocityDegreesPerSecond: 0
 --- !u!60 &1757521538
 PolygonCollider2D:
   m_ObjectHideFlags: 0
