@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Yeti.cs" />
     <Compile Include="Assets\Scripts\Rock.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\HighscoreStaticClass.cs" />
     <Compile Include="Assets\Scripts\DataStaticClass.cs" />
     <Compile Include="Assets\Scripts\Wall.cs" />
     <Compile Include="Assets\Scripts\DataClass.cs" />

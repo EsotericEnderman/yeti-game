@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
+        highscore = HighscoreStaticClass.highscore;
         UpdateHighscore();
 
         Time.timeScale = defaultTimeScale;
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
         if (score > highscore)
         {
             highscore = score;
+            HighscoreStaticClass.highscore = highscore;
         }
 
         highscoreText.text = highscore.ToString();
