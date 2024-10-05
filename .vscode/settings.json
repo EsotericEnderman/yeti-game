@@ -5,6 +5,7 @@
         "Enderman",
         "highscore",
         "Mathf",
-        "Rigidbody"
+        "Rigidbody",
+        "Yonders"
     ]
 }
