@@ -4,3 +4,5 @@ UserSettings
 Temp
 obj
 .safeq6
+*.csproj
+*.sln
