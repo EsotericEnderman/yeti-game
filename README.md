@@ -1,4 +1,4 @@
-# Yeti
+# Yeti Game
 
 > My first attempt at a proper Unity game.
 
