@@ -2,7 +2,10 @@
 
 > My first attempt at a proper Unity game.
 
-All assets in this game were made by [Yonders](https://itch.io/profile/yonders). All code was written by [me](https://github.com/EsotericEnderman).
+## Credits
+
+- All the assets in this game were made by [Yonders](https://itch.io/profile/yonders).
+- All the code was written by [me](https://enderman.dev).
 
 ## Topics
 
