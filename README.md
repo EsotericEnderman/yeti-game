@@ -1,6 +1,6 @@
 # Yeti Game
 
-[![Project Status: Completed](./assets/images/badges/status.svg)](./)
+[![Project Status: Completed](./Assets/Badges/Status.svg)](./)
 
 > My first attempt at a proper Unity game.
 
