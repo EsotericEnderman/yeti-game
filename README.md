@@ -5,7 +5,7 @@
 ## Credits
 
 - All the assets in this game were made by [Yonders](https://itch.io/profile/yonders).
-- All the code was written by [me](https://enderman.dev).
+- All the code was written by [Esoteric Enderman](https://enderman.dev).
 
 ## Topics
 
