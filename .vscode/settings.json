@@ -7,6 +7,7 @@
         "highscore",
         "Mathf",
         "Rigidbody",
+        "xlink",
         "Yonders"
     ]
 }
